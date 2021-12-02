@@ -1,43 +1,15 @@
 package day1
 
 import (
-	"bufio"
-	"log"
-	"os"
-	"strconv"
+	"fmt"
+
+	"github.com/garcialuis/2021-AdventOfCode/utils"
 )
 
-func ReadInputAsText(filepath string) []string {
+func PrepareInput(filename string) (nums []int) {
 
-	file, err := os.Open(filepath)
-	if err != nil {
-		log.Fatalf("failed opening file: %s", err)
-	}
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
-	var txtlines []string
-
-	for scanner.Scan() {
-		txtlines = append(txtlines, scanner.Text())
-	}
-
-	file.Close()
-
-	return txtlines
-}
-
-func StringToIntSlice(txtlines []string) []int {
-
-	nums := make([]int, len(txtlines))
-
-	for i, eachline := range txtlines {
-		//fmt.Println(eachline)
-		num, err := strconv.Atoi(eachline)
-		if err != nil {
-			log.Fatalf("failed to convert values: %s", err)
-		}
-		nums[i] = num
-	}
+	textLines := utils.ReadInputAsText(filename)
+	nums = utils.StringToIntSlice(textLines)
 
 	return nums
 }
@@ -79,13 +51,7 @@ func NumOfIncreasingWindows(depths []int) int {
 	return count
 }
 
-/*
-//Alternate way to read file:
-func ReadFile(filepath string) {
-	data, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		log.Fatalf("failed opening file: %s", err)
-	}
-	fmt.Println("Contents of file: ", string(data))
+func DisplayResults(increasingDepths, increasingDepthsByWindow int) {
+	fmt.Printf("DAY 1 RESULTS: \n\t(part1) -> %d increasing depths \n\t(part2) -> %d increasing depths in windows of 3.\n",
+		increasingDepths, increasingDepthsByWindow)
 }
-*/
